@@ -1,41 +1,49 @@
+import { FaBook, FaUsers, FaClipboardList, FaClock } from "react-icons/fa";
+
 import { useAuth } from "../context/AuthContext";
+import { dashboardStats } from "../data/dashboardData";
+
+import StatCard from "../components/cards/StatCard";
+import LoansChart from "../components/cards/LoansChart";
+import RecentLoansTable from "../components/tables/RecentLoansTable";
+
+const icons = [
+  <FaBook />,
+  <FaUsers />,
+  <FaClipboardList />,
+  <FaClock />,
+];
 
 export default function Dashboard() {
+  const { user } = useAuth();
 
-    const { user } = useAuth();
+  return (
+    <div>
 
-    return (
+      <h1 className="text-4xl font-bold">
+        Bienvenido, {user?.nombre}
+      </h1>
 
-        <div>
+      <p className="text-gray-500 mt-2 mb-8">
+        Panel principal del sistema de biblioteca.
+      </p>
 
-            <h1 className="text-4xl font-bold">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {dashboardStats.map((item, index) => (
+          <StatCard
+            key={item.title}
+            title={item.title}
+            value={item.value}
+            color={item.color}
+            icon={icons[index]}
+          />
+        ))}
+      </div>
 
-                Bienvenido
+      <LoansChart />
 
-            </h1>
+      <RecentLoansTable />
 
-            <p className="mt-4 text-xl">
-
-                {user?.nombre}
-
-            </p>
-
-            <p className="text-gray-600">
-
-                Rol:
-
-                <strong>
-
-                    {" "}
-
-                    {user?.rol}
-
-                </strong>
-
-            </p>
-
-        </div>
-
-    );
-
+    </div>
+  );
 }
