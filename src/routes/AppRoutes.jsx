@@ -3,86 +3,78 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import Books from "../pages/Books";
+import Users from "../pages/Users";
 import Loans from "../pages/Loans";
 import History from "../pages/History";
+import Reservations from "../pages/Reservations";
 import NotFound from "../pages/NotFound";
 
 import AdminLayout from "../layouts/AdminLayout";
-
 import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function AppRoutes() {
+  return (
+    <Routes>
 
-    return (
+      <Route path="/" element={<Login />} />
 
-        <Routes>
+      <Route
+        element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
 
-            <Route
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
 
-                path="/"
+        <Route
+          path="/books"
+          element={<Books />}
+        />
 
-                element={<Login />}
+        <Route
+          path="/loans"
+          element={<Loans />}
+        />
 
-            />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
 
-            <Route
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <History />
+            </ProtectedRoute>
+          }
+        />
 
-                element={
+        <Route
+          path="/reservations"
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <Reservations />
+            </ProtectedRoute>
+          }
+        />
 
-                    <ProtectedRoute>
+      </Route>
 
-                        <AdminLayout />
+      <Route
+        path="*"
+        element={<NotFound />}
+      />
 
-                    </ProtectedRoute>
-
-                }
-
-            >
-
-                <Route
-
-                    path="/dashboard"
-
-                    element={<Dashboard />}
-
-                />
-
-                <Route
-
-                    path="/books"
-
-                    element={<Books />}
-
-                />
-
-                <Route
-
-                    path="/loans"
-
-                    element={<Loans />}
-
-                />
-
-                <Route
-
-                    path="/history"
-
-                    element={<History />}
-
-                />
-
-            </Route>
-
-            <Route
-
-                path="*"
-
-                element={<NotFound />}
-
-            />
-
-        </Routes>
-
-    );
-
+    </Routes>
+  );
 }

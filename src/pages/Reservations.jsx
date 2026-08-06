@@ -1,8 +1,8 @@
-import { useHistory } from "../context/HistoryContext";
+import { useReservations } from "../context/ReservationContext";
 
-export default function History() {
+export default function Reservations() {
 
-  const { history } = useHistory();
+  const { reservations } = useReservations();
 
   return (
 
@@ -11,11 +11,11 @@ export default function History() {
       <div>
 
         <h1 className="text-3xl font-bold">
-          Historial del Sistema
+          Gestión de Reservas
         </h1>
 
         <p className="text-gray-500">
-          Registro de todos los movimientos realizados.
+          Administre las reservas de libros de la biblioteca.
         </p>
 
       </div>
@@ -30,21 +30,13 @@ export default function History() {
 
               <th className="p-3 text-center">#</th>
 
-              <th className="p-3 text-left">
-                Usuario
-              </th>
+              <th className="p-3 text-left">Usuario</th>
 
-              <th className="p-3 text-left">
-                Libro
-              </th>
+              <th className="p-3 text-left">Libro</th>
 
-              <th className="p-3 text-left">
-                Acción
-              </th>
+              <th className="p-3 text-left">Fecha</th>
 
-              <th className="p-3 text-left">
-                Fecha
-              </th>
+              <th className="p-3 text-left">Estado</th>
 
             </tr>
 
@@ -52,7 +44,7 @@ export default function History() {
 
           <tbody>
 
-            {history.length === 0 ? (
+            {reservations.length === 0 ? (
 
               <tr>
 
@@ -60,43 +52,39 @@ export default function History() {
                   colSpan="5"
                   className="text-center py-10 text-gray-500"
                 >
-
-                  No existen movimientos registrados.
-
+                  No existen reservas registradas.
                 </td>
 
               </tr>
 
             ) : (
 
-              history.map((item, index) => (
+              reservations.map((reservation, index) => (
 
                 <tr
-                  key={item.id}
+                  key={reservation.id}
                   className="border-b hover:bg-slate-50"
                 >
 
                   <td className="text-center">
-
                     {index + 1}
-
                   </td>
 
-                  <td>{item.usuario}</td>
+                  <td>{reservation.usuario}</td>
 
-                  <td>{item.libro}</td>
+                  <td>{reservation.libro}</td>
+
+                  <td>{reservation.fecha}</td>
 
                   <td>
 
-                    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+                    <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
 
-                      {item.accion}
+                      {reservation.estado}
 
                     </span>
 
                   </td>
-
-                  <td>{item.fecha}</td>
 
                 </tr>
 

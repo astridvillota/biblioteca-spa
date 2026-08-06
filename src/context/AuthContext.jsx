@@ -1,66 +1,80 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-const AuthContext = createContext();
-
-const USERS = [
-  {
-    id: 1,
-    nombre: "Administrador",
-    email: "admin@biblioteca.com",
-    password: "123456",
-    rol: "admin",
-  },
-  {
-    id: 2,
-    nombre: "Juan Pérez",
-    email: "usuario@biblioteca.com",
-    password: "123456",
-    rol: "member",
-  },
-];
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
-  useEffect(() => {
+  function login(email, password) {
 
-    const saved = localStorage.getItem("usuario");
+    let userData = null;
 
-    if (saved) {
+    // ADMINISTRADOR
 
-      setUser(JSON.parse(saved));
+    if (
+      email === "admin@biblioteca.com" &&
+      password === "123456"
+    ) {
+
+      userData = {
+
+        email: "admin@biblioteca.com",
+
+        nombre: "Administrador",
+
+        rol: "Administrador",
+
+      };
 
     }
 
-  }, []);
+    // MIEMBRO
 
-  const login = (email, password) => {
+    if (
+      email === "usuario@biblioteca.com" &&
+      password === "123456"
+    ) {
 
-    const encontrado = USERS.find(
-      u => u.email === email && u.password === password
-    );
+      userData = {
 
-    if (!encontrado) return false;
+        email: "usuario@biblioteca.com",
 
-    localStorage.setItem(
-      "usuario",
-      JSON.stringify(encontrado)
-    );
+        nombre: "Usuario",
 
-    setUser(encontrado);
+        rol: "Miembro",
 
-    return true;
+      };
 
-  };
+    }
 
-  const logout = () => {
+    if (userData) {
 
-    localStorage.removeItem("usuario");
+      setUser(userData);
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(userData)
+      );
+
+      return true;
+
+    }
+
+    return false;
+
+  }
+
+  function logout() {
 
     setUser(null);
 
-  };
+    localStorage.removeItem("user");
+
+  }
 
   return (
 
@@ -68,7 +82,7 @@ export function AuthProvider({ children }) {
       value={{
         user,
         login,
-        logout
+        logout,
       }}
     >
 
@@ -80,8 +94,6 @@ export function AuthProvider({ children }) {
 
 }
 
-export function useAuth(){
-
-    return useContext(AuthContext);
-
+export function useAuth() {
+  return useContext(AuthContext);
 }
