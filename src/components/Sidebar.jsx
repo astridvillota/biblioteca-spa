@@ -8,7 +8,6 @@ import {
   FaHistory,
   FaCalendarCheck,
   FaMoneyBillWave,
-  FaChartBar,
   FaRobot,
 } from "react-icons/fa";
 
@@ -27,9 +26,7 @@ export default function Sidebar() {
     <aside className="w-64 bg-slate-900 text-white min-h-screen p-5">
 
       <h1 className="text-2xl font-bold mb-8">
-
         Biblioteca
-
       </h1>
 
       <nav className="flex flex-col gap-4">
@@ -91,14 +88,6 @@ export default function Sidebar() {
             >
               <FaMoneyBillWave />
               Multas
-            </Link>
-
-            <Link
-              to="/reports"
-              className="flex items-center gap-3 hover:text-blue-400 transition"
-            >
-              <FaChartBar />
-              Reportes
             </Link>
 
           </>
