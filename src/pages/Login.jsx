@@ -1,5 +1,7 @@
 ﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaBookOpen, FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
@@ -13,6 +15,7 @@ export default function Login() {
 
   const ingresar = (e) => {
     e.preventDefault();
+
     setError("");
 
     if (!email.trim() || !password.trim()) {
@@ -25,18 +28,29 @@ export default function Login() {
     if (ok) {
       navigate("/dashboard");
     } else {
-      setError("Correo o contrasena incorrectos.");
+      setError("Correo o contraseña incorrectos.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-900 to-slate-800 flex items-center justify-center px-4">
+
       <div className="w-full max-w-md">
+
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
 
+          {/* ENCABEZADO / LOGO */}
           <div className="bg-blue-700 text-white px-8 py-8 text-center">
-            <div className="mx-auto mb-4 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg text-4xl">
-              📚
+
+            <div className="mx-auto mb-4 w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+
+              <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center">
+                <FaBookOpen
+                  className="text-blue-700"
+                  size={42}
+                />
+              </div>
+
             </div>
 
             <h1 className="text-3xl font-bold">
@@ -44,14 +58,16 @@ export default function Login() {
             </h1>
 
             <p className="mt-2 text-blue-100">
-              Sistema de Gestion Bibliotecaria
+              Sistema de Gestión Bibliotecaria
             </p>
+
           </div>
 
+          {/* FORMULARIO */}
           <div className="p-8">
 
             <h2 className="text-2xl font-bold text-slate-800 text-center mb-2">
-              Iniciar sesion
+              Iniciar sesión
             </h2>
 
             <p className="text-gray-500 text-center mb-6">
@@ -60,31 +76,41 @@ export default function Login() {
 
             <form onSubmit={ingresar}>
 
+              {/* CORREO */}
               <div className="mb-5">
+
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Correo electronico
+                  Correo electrónico
                 </label>
 
                 <input
                   type="email"
-                  className="border border-gray-300 w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-300 w-full p-3 rounded-lg
+                  focus:outline-none focus:ring-2 focus:ring-blue-500
+                  focus:border-blue-500"
                   placeholder="Ingrese su correo"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="username"
                 />
+
               </div>
 
+              {/* CONTRASEÑA */}
               <div className="mb-5">
+
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Contrasena
+                  Contraseña
                 </label>
 
                 <div className="relative">
+
                   <input
                     type={showPassword ? "text" : "password"}
-                    className="border border-gray-300 w-full p-3 pr-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Ingrese su contrasena"
+                    className="border border-gray-300 w-full p-3 pr-12 rounded-lg
+                    focus:outline-none focus:ring-2 focus:ring-blue-500
+                    focus:border-blue-500"
+                    placeholder="Ingrese su contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
@@ -93,41 +119,66 @@ export default function Login() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2
+                    text-gray-500 hover:text-blue-600 transition"
+                    aria-label={
+                      showPassword
+                        ? "Ocultar contraseña"
+                        : "Mostrar contraseña"
+                    }
                   >
-                    {showPassword ? "Ocultar" : "Ver"}
+
+                    {showPassword ? (
+                      <FaEyeSlash size={20} />
+                    ) : (
+                      <FaEye size={20} />
+                    )}
+
                   </button>
+
                 </div>
+
               </div>
 
+              {/* ERROR */}
               {error && (
-                <div className="mb-5 bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm text-center">
+                <div className="mb-5 bg-red-50 border border-red-200
+                text-red-700 rounded-lg p-3 text-sm text-center">
                   {error}
                 </div>
               )}
 
+              {/* BOTÓN */}
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition shadow-md"
+                className="w-full bg-blue-600 hover:bg-blue-700
+                text-white font-semibold py-3 rounded-lg
+                transition shadow-md"
               >
                 Ingresar al sistema
               </button>
 
             </form>
+
           </div>
 
+          {/* PIE */}
           <div className="bg-gray-50 border-t px-6 py-4 text-center">
+
             <p className="text-sm text-gray-500">
-              Sistema de Gestion de Biblioteca
+              Sistema de Gestión de Biblioteca
             </p>
 
             <p className="text-xs text-gray-400 mt-1">
-              Biblioteca SPA - 2026
+              Biblioteca SPA · 2026
             </p>
+
           </div>
 
         </div>
+
       </div>
+
     </div>
   );
 }
