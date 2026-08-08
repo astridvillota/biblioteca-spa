@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
@@ -17,6 +17,7 @@ import { FineProvider } from "./context/FineContext";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
+
       <AuthProvider>
         <LibraryProvider>
           <BookProvider>
@@ -25,7 +26,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 <HistoryProvider>
                   <ReservationProvider>
                     <FineProvider>
+
                       <App />
+
                     </FineProvider>
                   </ReservationProvider>
                 </HistoryProvider>
@@ -34,6 +37,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </BookProvider>
         </LibraryProvider>
       </AuthProvider>
+
     </BrowserRouter>
   </React.StrictMode>
 );
